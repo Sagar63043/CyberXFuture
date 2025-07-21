@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>📘 Documentation - CyberXFuture</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ✅ Navbar -->
+  <div id="navbar"></div>
+  <script>
+    fetch("navbar.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("navbar").innerHTML = data;
+      });
+  </script>
+
+  <!-- ✅ Main Documentation -->
+  <div class="container">
+    <h1>📘 Documentation</h1>
+
+    <section>
+      <h2>🔍 परियोजना का उद्देश्य</h2>
+      <p>CyberXFuture एक सुरक्षा जागरूकता वेबसाइट है जो यूज़र को IP, कैमरा, लोकेशन जैसी जानकारी के साथ-साथ साइबर सुरक्षा समाचार भी प्रदान करती है।</p>
+    </section>
+
+    <section>
+      <h2>📦 फाइल स्ट्रक्चर</h2>
+<pre><code>
+CyberXFuture/
+├── index.html
+├── dashboard.html
+├── profile.html
+├── contact.html
+├── news.html
+├── docs.html
+├── js/
+│   ├── dashboard.js
+│   ├── news.js
+│   ├── profile.js
+│   ├── contact.js
+│   └── dbhandler.js
+├── assets/
+│   └── images/
+├── navbar.html
+└── style.css
+</code></pre>
+    </section>
+
+    <section>
+      <h2>🛠 इस्तेमाल की गई तकनीकें</h2>
+      <ul>
+        <li>HTML5, CSS3, JavaScript</li>
+        <li>API: ipify, newsapi</li>
+        <li>Node.js backend (optional)</li>
+        <li>GitHub पर होस्टिंग</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>🚀 उपयोग कैसे करें</h2>
+      <ol>
+        <li>GitHub repo बनाएं और कोड अपलोड करें</li>
+        <li>GitHub Pages से index.html को होस्ट करें</li>
+        <li>Login करें और Dashboard से जानकारी देखें</li>
+      </ol>
+    </section>
+
+  </div>
+</body>
+</html>
