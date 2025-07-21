@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CyberXFuture | Dashboard</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .dashboard {
+      padding: 30px;
+      background-color: rgba(0, 0, 0, 0.75);
+      border-radius: 15px;
+      box-shadow: 0 0 20px #00fff7;
+      max-width: 600px;
+      margin: auto;
+      text-align: center;
+    }
+    .news-box {
+      background: #111;
+      padding: 15px;
+      margin-top: 20px;
+      border-radius: 10px;
+      color: #00ffcc;
+      text-align: left;
+    }
+    #logoutBtn {
+      margin-top: 20px;
+      background-color: red;
+      color: white;
+    }
+    #bgImage {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+      opacity: 0.15;
+      object-fit: cover;
+    }
+/* style.css */
+/* Add this in style.css or inside <style> in your HTML */
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #111;
+  color: white;
+  padding: 10px 20px;
+  position: fixed; /* 🧲 To keep it fixed at the top */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+}
+
+.navbar .logo {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.navbar .nav-links {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+}
+
+.navbar .nav-links li a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+body {
+  padding-top: 60px; /* 🧱 So content doesn't go under navbar */
+}
+
+  </style>
+</head>
+<body>
+<div id="navbar"></div>
+<script>
+  fetch("navbar.html")
+    .then(res => res.text())
+    .then(data => {
+      document.getElementById("navbar").innerHTML = data;
+    });
+</script>
+
+  <img id="bgImage" src="assets/images/bg1.jpg" alt="Background" />
+  <div class="dashboard">
+    <h1>🧙 Welcome to CyberXFuture</h1>
+    <p><strong>Your IP:</strong> <span id="userIp">Detecting...</span></p>
+    <div class="news-box" id="newsSection">
+      <h3>🔐 Latest Cybersecurity News:</h3>
+      <ul id="newsList">
+        <li>Hacker group “ShadowSpider” breached 10M devices worldwide.</li>
+        <li>Google patches 0-day vulnerability in Android kernel.</li>
+        <li>New AI-based malware can mimic your typing behavior.</li>
+      </ul>
+    </div>
+   /* <button id="
+  </div>
+
+  <script src="js/dashboard.js"></script>
+<script src="js/logout.js"></script>
+
+</body>
+<script src="js/dashboard.js"></script>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <title>प्रोफ़ाइल | CyberXFuture</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ✅ Navbar -->
+  <div id="navbar"></div>
+  <script>
+    fetch("navbar.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("navbar").innerHTML = data;
+      });
+  </script>
+
+  <!-- ✅ Profile Section -->
+  <div class="profile-section" style="padding: 20px;">
+    <h2>👤 आपकी प्रोफ़ाइल</h2>
+    <p><strong>Username:</strong> <span id="uname">लोड हो रहा है...</span></p>
+    <p><strong>Email:</strong> <span id="uemail">लोड हो रहा है...</span></p>
+    <img src="assets/images/user1.jpg" width="120" style="margin-top: 10px; border-radius: 8px;">
+  </div>
+
+  <!-- ✅ JS to Load Profile Data -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (!user) {
+        alert("⚠️ कृपया पहले लॉगिन करें");
+        window.location.href = "login.html";
+        return;
+      }
+      document.getElementById("uname").textContent = user.username || "नाम नहीं मिला";
+      document.getElementById("uemail").textContent = user.email || "ईमेल नहीं मिला";
+    });
+  </script>
+
+</body>
+</html>

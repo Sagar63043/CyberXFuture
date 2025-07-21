@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <title>संपर्क करें | CyberXFuture</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ✅ Navbar -->
+  <div id="navbar"></div>
+  <script>
+    fetch("navbar.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("navbar").innerHTML = data;
+      });
+  </script>
+
+  <!-- ✅ Contact Section -->
+  <div class="contact-section" style="padding: 20px;">
+    <h2>📞 संपर्क करें</h2>
+    <p>आप हमसे निम्नलिखित माध्यमों से संपर्क कर सकते हैं:</p>
+    <ul>
+      <li><strong>ईमेल:</strong> support@cyberxfuture.com</li>
+      <li><strong>फोन:</strong> +91-9876543210</li>
+      <li><strong>पता:</strong> दिल्ली, भारत</li>
+    </ul>
+
+    <h3>✉we send message</h3>
+    <form onsubmit="alert('संदेश भेज दिया गया है!'); return false;">
+      <input type="text" placeholder="आपका नाम" required><br><br>
+      <input type="email" placeholder="आपका ईमेल" required><br><br>
+      <textarea placeholder="अपना संदेश लिखें..." rows="5" required></textarea><br><br>
+      <button type="submit">send</button>
+    </form>
+  </div>
+
+</body>
+</html>

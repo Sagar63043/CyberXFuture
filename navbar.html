@@ -1,0 +1,129 @@
+<!-- navbar.html -->
+<style>
+  .navbar {
+    background-color: #222;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+  }
+
+  .brand {
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .menu-icon {
+    font-size: 26px;
+    cursor: pointer;
+    display: block;
+  }
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 60px;
+    left: 10px;
+    background-color: #333;
+    flex-direction: column;
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 99;
+  }
+
+  .nav-links a {
+    color: white;
+    padding: 10px;
+    text-decoration: none;
+  }
+
+  .nav-links a:hover {
+    background-color: #444;
+  }
+
+  /* Desktop view */
+  @media(min-width: 768px) {
+    .menu-icon {
+      display: none;
+    }
+
+    .nav-links {
+      display: flex !important;
+      position: static;
+      flex-direction: row;
+      background: none;
+      padding: 0;
+    }
+
+    .nav-links a {
+      margin-left: 15px;
+    }
+  }
+
+
+/* Add this in style.css or inside <style> in your HTML */
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #111;
+  color: white;
+  padding: 10px 20px;
+  position: fixed; /* 🧲 To keep it fixed at the top */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+}
+
+.navbar .logo {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.navbar .nav-links {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+}
+
+.navbar .nav-links li a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+body {
+  padding-top: 60px; /* 🧱 So content doesn't go under navbar */
+}
+
+
+</style>
+
+<!-- navbar.html -->
+<nav class="navbar">
+  <div class="logo">CyberXFuture</div>
+  <ul class="nav-links">
+    <li><a href="dashboard.html">Dashboard</a></li>
+    <li><a href="profile.html">Profile</a></li>
+    <li><a href="news.html">News</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="login.html" id="logoutBtn">Logout</a></li>
+  </ul>
+</nav>
+
+<script>
+  function toggleMenu() {
+    const links = document.getElementById("navLinks");
+    links.style.display = (links.style.display === "flex") ? "none" : "flex";
+  }
+
+  function logout() {
+    localStorage.clear();
+    alert("आप लॉगआउट हो चुके हैं!");
+    window.location.href = "login.html";
+  }
+</script>
