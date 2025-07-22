@@ -5,14 +5,14 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 require('dotenv').config(); // .env से Mongo URI लाने के लिए
 
-const { saveUserData, getUserData } = require("./public/js/dbhandler");
+const { saveUserData, getUserData } = require("./docs/js/dbhandler");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static('public')); // Static HTML files serve करने के लिए
+app.use(express.static('docs')); // Static HTML files serve करने के लिए
 
 // ✅ Route: User Registration
 app.post('/register', async (req, res) => {
