@@ -1,19 +1,39 @@
-// dbhandler.js
-// 🔐 Store & retrieve user login data (for demo/testing only)
+// js/dbhandler.js
 
-function saveUserData(username, password) {
-  localStorage.setItem("userData", JSON.stringify({ username, password }));
+require('dotenv').config(); // .env file से Mongo URI लाने के लिए
+const mongoose = require('mongoose');
+
+// MongoDB से connect करें
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(() => console.log("✅ MongoDB Connected"))
+.catch((err) => console.error("❌ MongoDB Error:", err));
+
+// Schema बनाएं
+const userSchema = new mongoose.Schema({
+  username: String,
+  password: String
+});
+
+// Model बनाएं
+const User = mongoose.model('User', userSchema);
+
+// USER को MongoDB में save करने का function
+async function saveUserData(username, password) {
+  const user = new User({ username, password });
+  await user.save();
+  console.log("✅ User saved:", user);
 }
 
-function getUserData() {
-  return JSON.parse(localStorage.getItem("userData")) || null;
+// USER को MongoDB से पढ़ने का function
+async function getUserData(username) {
+  return await User.findOne({ username });
 }
 
-function isAuthenticated(username, password) {
-  const saved = getUserData();
-  return saved && saved.username === username && saved.password === password;
-}
-
-function logoutUser() {
-  localStorage.removeItem("userData");
-}
+// Functions को export करें ताकि server.js use कर सके
+module.exports = {
+  saveUserData,
+  getUserData
+};
