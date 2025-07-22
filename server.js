@@ -1,42 +1,39 @@
-const express = require("express");
-const cors = require("cors");
-const bodyParser = require("body-parser");
-const { MongoClient } = require("mongodb");
-require("dotenv").config();
+// server.js
+
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+require('dotenv').config(); // .env से Mongo URI लाने के लिए
+
+const { saveUserData, getUserData } = require("./public/js/dbhandler");
 
 const app = express();
+const PORT = process.env.PORT || 3000;
+
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static("public")); // frontend files here
+app.use(express.static('public')); // Static HTML files serve करने के लिए
 
-const uri = process.env.MONGO_URI;
-let db;
-
-MongoClient.connect(uri).then(client => {
-  db = client.db("cyberx");
-  console.log("✅ MongoDB Connected");
+// ✅ Route: User Registration
+app.post('/register', async (req, res) => {
+  const { username, password } = req.body;
+  await saveUserData(username, password);
+  res.json({ success: true, message: 'User registered successfully' });
 });
 
-// 👤 Registration
-app.post("/register", async (req, res) => {
-  const { username, email, password } = req.body;
-  const exists = await db.collection("users").findOne({ email });
-  if (exists) return res.status(400).json({ message: "⚠️ Email already exists." });
+// ✅ Route: User Login
+app.post('/login', async (req, res) => {
+  const { username, password } = req.body;
+  const user = await getUserData(username);
 
-  await db.collection("users").insertOne({ username, email, password });
-  res.json({ message: "✅ Registered successfully." });
+  if (user && user.password === password) {
+    res.json({ success: true, message: 'Login successful' });
+  } else {
+    res.json({ success: false, message: 'Invalid credentials' });
+  }
 });
 
-// 🔑 Login
-app.post("/login", async (req, res) => {
-  const { email, password } = req.body;
-  const user = await db.collection("users").findOne({ email });
-  if (!user) return res.status(404).json({ message: "❌ Email not found." });
-  if (user.password !== password)
-    return res.status(401).json({ message: "⚠️ Please use the same password used during registration." });
-
-  res.json({ message: "✅ Login successful", user });
+// ✅ Server Listen
+app.listen(PORT, () => {
+  console.log(`🚀 Server is running on http://localhost:${PORT}`);
 });
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`🚀 Server running at http://localhost:${PORT}`));
