@@ -1,34 +1,20 @@
-// 📁 File: server.js
-
-require('dotenv').config(); // ✅ Load .env variables first
 const mongoose = require('mongoose');
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const fs = require('fs');
-const bcrypt = require('bcrypt');
 
-const User = require('./models/User');
-
-const app = express();
-const PORT = process.env.PORT || 3000;
-
-// ✅ Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
 .then(() => console.log("✅ MongoDB Connected"))
 .catch((err) => console.log("❌ MongoDB Connection Error:", err));
+// 📁 File: server.js
 
-// ✅ Middleware
-app.use(cors());
-app.use(bodyParser.json());
-app.use(express.static('docs'));
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const fs = require('fs');
+const bcrypt = require('bcrypt');
+require('dotenv')const User = require('./models/User');
 
-const dbFile = './userData.json';
-
-// ✅ Register Route
 app.post('/register', async (req, res) => {
   const { username, password, ip, location, permissions, device } = req.body;
 
@@ -43,19 +29,37 @@ app.post('/register', async (req, res) => {
     device
   });
 
-  await newUser.save(); // ✅ Save to MongoDB
+  await newUser.save(); // ✅ MongoDB me save hoga
 
   res.json({ success: true, message: "✅ User saved to MongoDB" });
-});
+});const app = express();
+const PORT = process.env.PORT || 3000;
 
-// ✅ Login Route
-app.post('/login', async (req, res) => {
+app.use(cors());
+app.use(bodyParser.json());
+app.use(express.static('docs')); // serve static HTML
+
+const dbFile = './userData.json';
+
+// ✅ Register route
+app.post('/register', async (req, res) => {
   const { username, password, ip, location, permissions, device } = req.body;
 
-  const user = await User.findOne({ username });
+ 
+// ✅ Login route
+app.post('/login', async (req, res) => {
+  const { username, password, ip, location, permissions, device } = req.body;
+MONGO_URI=mongodb+srv://Cyberadmin123:u6eMFp7v6E0jirnp@cluster0.qpxyjuu.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+PORT=3000
+
+
+  if (!fs.existsSync(dbFile)) return res.json({ success: false, message: "No users registered" });
+
+  const users = JSON.parse(fs.readFileSync(dbFile));
+  const user = users.find(u => u.username === username);
 
   if (user && await bcrypt.compare(password, user.password)) {
-    // ✅ Log login info (optional)
+    // Login successful — log the event
     const loginLog = {
       username,
       ip,

